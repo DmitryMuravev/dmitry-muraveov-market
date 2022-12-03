@@ -1,0 +1,40 @@
+server:
+  port: ${MARKET_SERVICE_PORT:8081}
+cxf:
+  path: /InfoService
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/market_db}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:pass_123}
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        jdbc:
+          batch_size: 10
+        order_inserts: true
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQL10Dialect
+logging:
+  level:
+    com.dmitry.muravev.market: DEBUG
+    org.springframework.transaction: DEBUG
+    org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+springfox:
+  documentation:
+    enabled: true
+discount:
+  min-total-discount: 0
+  max-total-discount: 18
+  min-goods-discount: 1
+  max-goods-discount: 15
+  min-client-discount: 0
+  max-client-discount: 18
+  second-discount-threshold: 5
+cron:
+  update-goods-discount: ${UPDATE_GOODS_DISCOUNT_CRON:0 0 * * * *}
+  update-statistic: ${UPDATE_STATISTICS_CRON:0 0 0 * * *}
